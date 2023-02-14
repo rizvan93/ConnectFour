@@ -6,6 +6,7 @@ const game = {
   turn: 1, //to move to click start button later
   board: [], //insert whatever size board you want here
   scoreCounts: [0, 0],
+  players: ["Player 2", , "Player 1"],
 };
 
 /*----- cached elements  -----*/
@@ -34,7 +35,10 @@ function clickGameButton(event) {
   const col = parseInt(clicked.getAttribute("id").slice(-1));
   dropDisc(0, col);
 
-  if (checkWinner()) updateWinner();
+  if (checkWinner()) {
+    updateWinner();
+    return;
+  }
 
   game.turn *= -1;
   renderAll();
@@ -50,7 +54,10 @@ function updateWinner() {
   }
 }
 
-function renderWinner() {}
+function renderWinner(winnerMessage) {
+  const winnerDeclaration = document.querySelector("#turn-indicator");
+  winnerDeclaration.innerText = winnerMessage;
+}
 
 function dropDisc(row, colToDrop) {
   //drop if last row or next row is occupied
@@ -174,6 +181,11 @@ function renderRows() {
   }
 }
 
+function renderTurnIndicator() {
+  const turnIndicator = document.querySelector("#turn-indicator");
+  turnIndicator.innerText = `${game.players[game.turn + 1]}'s turn`;
+}
+
 function renderBoard() {
   if (!gameBoard.firstChild) {
     renderButtons();
@@ -188,6 +200,7 @@ function renderBoard() {
 function renderAll() {
   renderScreen();
   renderBoard();
+  renderTurnIndicator();
 }
 
 function initialize() {

@@ -36,6 +36,7 @@ function clickGameButton(event) {
   dropDisc(0, col);
 
   if (checkWinner()) {
+    renderBoard();
     updateWinner();
     return;
   }
